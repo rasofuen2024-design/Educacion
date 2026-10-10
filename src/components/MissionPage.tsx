@@ -89,23 +89,14 @@ export default function MissionPage({ missionId, mission, onComplete, onClose, o
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-900 to-purple-900">
-      {/* ========== BOTÓN DE AJUSTES FIJO - ESQUINA SUPERIOR DERECHA ========== */}
+      {/* ========== BOTÓN DE AJUSTES - ESQUINA SUPERIOR DERECHA ========== */}
       <button
         onClick={onOpenSettings}
-        className="fixed top-4 right-4 z-[9999] bg-gradient-to-br from-amber-400 to-orange-600 
-          hover:from-amber-500 hover:to-orange-700
-          w-14 h-14 rounded-full flex items-center justify-center 
-          shadow-[0_0_20px_rgba(255,165,0,0.6)] hover:shadow-[0_0_30px_rgba(255,165,0,0.9)]
-          border-3 border-yellow-300
-          transition-all duration-300 hover:scale-110 active:scale-95
-          group"
+        className="fixed top-4 right-4 z-[9999] bg-orange-500 w-14 h-14 rounded-full flex items-center justify-center shadow-lg cursor-pointer"
         title="⚙️ Ajustes"
         style={{ border: '3px solid #fde047' }}
       >
-        <span className="text-3xl group-hover:rotate-90 transition-transform duration-500">⚙️</span>
-        <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-black/80 text-yellow-300 text-[10px] font-bold px-2 py-0.5 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
-          AJUSTES
-        </span>
+        <span className="text-3xl">⚙️</span>
       </button>
 
       {/* Success Modal */}
