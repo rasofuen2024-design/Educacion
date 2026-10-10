@@ -1,5 +1,4 @@
 import { useState, useRef } from 'react';
-import SettingsModal from './SettingsModal';
 
 interface Mission {
   id: number;
@@ -136,24 +135,26 @@ export default function MissionPage({ missionId, mission, onComplete, onClose, o
           <div className="flex items-center gap-2">
             <button
               onClick={handleSave}
-              className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold px-4 py-2 rounded-lg hover:opacity-90 transition-all shadow-lg flex items-center gap-2"
+              className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold px-3 py-2 rounded-lg hover:opacity-90 transition-all shadow-lg flex items-center gap-1 text-sm"
             >
               <span>💾</span>
-              <span className="hidden sm:inline">Guardar</span>
+              <span className="hidden md:inline">Guardar</span>
             </button>
             <button
               onClick={onOpenSettings}
-              className="bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg p-2 transition-all group"
-              title="Ajustes"
+              className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 
+                border-2 border-yellow-300/50 rounded-full w-10 h-10 flex items-center justify-center 
+                transition-all group hover:scale-110 shadow-lg shadow-orange-500/30"
+              title="⚙️ Ajustes"
             >
-              <span className="text-xl group-hover:rotate-90 transition-transform duration-300">⚙️</span>
+              <span className="text-xl group-hover:rotate-90 transition-transform duration-500">⚙️</span>
             </button>
             <button
               onClick={handleComplete}
-              className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold px-4 py-2 rounded-lg hover:opacity-90 transition-all shadow-lg flex items-center gap-2"
+              className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold px-3 py-2 rounded-lg hover:opacity-90 transition-all shadow-lg flex items-center gap-1 text-sm"
             >
               <span>✅</span>
-              <span className="hidden sm:inline">Completar</span>
+              <span className="hidden md:inline">Completar</span>
             </button>
           </div>
         </div>
@@ -396,7 +397,7 @@ export default function MissionPage({ missionId, mission, onComplete, onClose, o
             <span className="text-lg">{mission.icon}</span>
             <span className="text-white/80 text-sm font-medium">Misión {missionId} de 5</span>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
             <button
               onClick={onClose}
               className="bg-white/10 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-white/20 transition-all"
@@ -410,10 +411,19 @@ export default function MissionPage({ missionId, mission, onComplete, onClose, o
               💾 Guardar
             </button>
             <button
+              onClick={onOpenSettings}
+              className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 
+                border-2 border-yellow-300/50 rounded-full w-10 h-10 flex items-center justify-center 
+                transition-all group hover:scale-110 shadow-lg shadow-orange-500/30"
+              title="⚙️ Ajustes"
+            >
+              <span className="text-xl group-hover:rotate-90 transition-transform duration-500">⚙️</span>
+            </button>
+            <button
               onClick={handleComplete}
               className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-2 rounded-lg text-sm font-bold hover:opacity-90 transition-all shadow-lg"
             >
-              ✅ Completar Misión (+200 XP)
+              ✅ Completar (+200 XP)
             </button>
           </div>
         </div>
