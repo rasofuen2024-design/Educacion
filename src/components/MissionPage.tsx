@@ -89,6 +89,25 @@ export default function MissionPage({ missionId, mission, onComplete, onClose, o
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-900 to-purple-900">
+      {/* ========== BOTÓN DE AJUSTES FIJO - ESQUINA SUPERIOR DERECHA ========== */}
+      <button
+        onClick={onOpenSettings}
+        className="fixed top-4 right-4 z-[9999] bg-gradient-to-br from-amber-400 to-orange-600 
+          hover:from-amber-500 hover:to-orange-700
+          w-14 h-14 rounded-full flex items-center justify-center 
+          shadow-[0_0_20px_rgba(255,165,0,0.6)] hover:shadow-[0_0_30px_rgba(255,165,0,0.9)]
+          border-3 border-yellow-300
+          transition-all duration-300 hover:scale-110 active:scale-95
+          group"
+        title="⚙️ Ajustes"
+        style={{ border: '3px solid #fde047' }}
+      >
+        <span className="text-3xl group-hover:rotate-90 transition-transform duration-500">⚙️</span>
+        <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-black/80 text-yellow-300 text-[10px] font-bold px-2 py-0.5 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+          AJUSTES
+        </span>
+      </button>
+
       {/* Success Modal */}
       {showSuccess && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
@@ -139,15 +158,6 @@ export default function MissionPage({ missionId, mission, onComplete, onClose, o
             >
               <span>💾</span>
               <span className="hidden md:inline">Guardar</span>
-            </button>
-            <button
-              onClick={onOpenSettings}
-              className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 
-                border-2 border-yellow-300/50 rounded-full w-10 h-10 flex items-center justify-center 
-                transition-all group hover:scale-110 shadow-lg shadow-orange-500/30"
-              title="⚙️ Ajustes"
-            >
-              <span className="text-xl group-hover:rotate-90 transition-transform duration-500">⚙️</span>
             </button>
             <button
               onClick={handleComplete}
@@ -409,15 +419,6 @@ export default function MissionPage({ missionId, mission, onComplete, onClose, o
               className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-4 py-2 rounded-lg text-sm font-bold hover:opacity-90 transition-all shadow-lg flex items-center gap-2"
             >
               💾 Guardar
-            </button>
-            <button
-              onClick={onOpenSettings}
-              className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 
-                border-2 border-yellow-300/50 rounded-full w-10 h-10 flex items-center justify-center 
-                transition-all group hover:scale-110 shadow-lg shadow-orange-500/30"
-              title="⚙️ Ajustes"
-            >
-              <span className="text-xl group-hover:rotate-90 transition-transform duration-500">⚙️</span>
             </button>
             <button
               onClick={handleComplete}
