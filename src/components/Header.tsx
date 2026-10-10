@@ -2,9 +2,10 @@ interface HeaderProps {
   level: { name: string; icon: string };
   totalXP: number;
   completedMissions: number;
+  onOpenSettings: () => void;
 }
 
-export default function Header({ level, totalXP, completedMissions }: HeaderProps) {
+export default function Header({ level, totalXP, completedMissions, onOpenSettings }: HeaderProps) {
   return (
     <header className="relative">
       <div className="bg-gradient-to-r from-indigo-900/80 via-purple-900/80 to-pink-900/80 backdrop-blur-lg border-b border-white/10">
@@ -57,6 +58,15 @@ export default function Header({ level, totalXP, completedMissions }: HeaderProp
                   </div>
                 </div>
               </div>
+
+              {/* Settings Button */}
+              <button
+                onClick={onOpenSettings}
+                className="bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-3 transition-all group hover:scale-105"
+                title="Ajustes"
+              >
+                <span className="text-2xl group-hover:rotate-90 transition-transform duration-300">⚙️</span>
+              </button>
             </div>
           </div>
         </div>

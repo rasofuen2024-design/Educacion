@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import SettingsModal from './SettingsModal';
 
 interface Mission {
   id: number;
@@ -15,9 +16,10 @@ interface MissionPageProps {
   mission: Mission;
   onComplete: (missionId: number) => void;
   onClose: () => void;
+  onOpenSettings: () => void;
 }
 
-export default function MissionPage({ missionId, mission, onComplete, onClose }: MissionPageProps) {
+export default function MissionPage({ missionId, mission, onComplete, onClose, onOpenSettings }: MissionPageProps) {
   const [activeTab, setActiveTab] = useState<'content' | 'interactive'>('content');
   const [textContent, setTextContent] = useState('');
   const [imageUrl, setImageUrl] = useState('');
@@ -25,6 +27,7 @@ export default function MissionPage({ missionId, mission, onComplete, onClose }:
   const [embedUrl, setEmbedUrl] = useState('');
   const [embedMode, setEmbedMode] = useState<'url' | 'code'>('url');
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showSaveMessage, setShowSaveMessage] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -46,6 +49,13 @@ export default function MissionPage({ missionId, mission, onComplete, onClose }:
     setTimeout(() => {
       onComplete(missionId);
     }, 2500);
+  };
+
+  const handleSave = () => {
+    setShowSaveMessage(true);
+    setTimeout(() => {
+      setShowSaveMessage(false);
+    }, 2000);
   };
 
   const getEmbedContent = () => {
@@ -96,6 +106,14 @@ export default function MissionPage({ missionId, mission, onComplete, onClose }:
         </div>
       )}
 
+      {/* Save Message */}
+      {showSaveMessage && (
+        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-green-500 text-white px-6 py-3 rounded-xl shadow-2xl animate-bounce-in flex items-center gap-2">
+          <span className="text-xl">💾</span>
+          <span className="font-bold">¡Contenido guardado exitosamente!</span>
+        </div>
+      )}
+
       {/* Top Navigation */}
       <div className="bg-black/30 backdrop-blur-lg border-b border-white/10 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -115,13 +133,29 @@ export default function MissionPage({ missionId, mission, onComplete, onClose }:
             </div>
           </div>
 
-          <button
-            onClick={handleComplete}
-            className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold px-4 py-2 rounded-lg hover:opacity-90 transition-all shadow-lg flex items-center gap-2"
-          >
-            <span>✅</span>
-            <span className="hidden sm:inline">Completar</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleSave}
+              className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold px-4 py-2 rounded-lg hover:opacity-90 transition-all shadow-lg flex items-center gap-2"
+            >
+              <span>💾</span>
+              <span className="hidden sm:inline">Guardar</span>
+            </button>
+            <button
+              onClick={onOpenSettings}
+              className="bg-white/10 hover:bg-white/20 border border-white/20 rounded-lg p-2 transition-all group"
+              title="Ajustes"
+            >
+              <span className="text-xl group-hover:rotate-90 transition-transform duration-300">⚙️</span>
+            </button>
+            <button
+              onClick={handleComplete}
+              className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold px-4 py-2 rounded-lg hover:opacity-90 transition-all shadow-lg flex items-center gap-2"
+            >
+              <span>✅</span>
+              <span className="hidden sm:inline">Completar</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -368,6 +402,12 @@ export default function MissionPage({ missionId, mission, onComplete, onClose }:
               className="bg-white/10 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-white/20 transition-all"
             >
               ← Mapa
+            </button>
+            <button
+              onClick={handleSave}
+              className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-4 py-2 rounded-lg text-sm font-bold hover:opacity-90 transition-all shadow-lg flex items-center gap-2"
+            >
+              💾 Guardar
             </button>
             <button
               onClick={handleComplete}

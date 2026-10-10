@@ -2,6 +2,7 @@ import { useState } from 'react';
 import MissionPage from './components/MissionPage';
 import Badge from './components/Badge';
 import Header from './components/Header';
+import SettingsModal from './components/SettingsModal';
 
 interface Mission {
   id: number;
@@ -17,6 +18,8 @@ function App() {
   const [activeMission, setActiveMission] = useState<number | null>(null);
   const [completedMissions, setCompletedMissions] = useState<number[]>([]);
   const [totalXP, setTotalXP] = useState(0);
+  const [showSettings, setShowSettings] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   const missions: Mission[] = [
     {
@@ -82,6 +85,23 @@ function App() {
     setActiveMission(null);
   };
 
+  const handleOpenSettings = () => {
+    setShowSettings(true);
+  };
+
+  const handleCloseSettings = () => {
+    setShowSettings(false);
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setShowSettings(false);
+    // Reset state
+    setActiveMission(null);
+    setCompletedMissions([]);
+    setTotalXP(0);
+  };
+
   const getLevel = () => {
     if (completedMissions.length === 0) return { name: "Explorador", icon: "🌱" };
     if (completedMissions.length <= 2) return { name: "Aprendiz", icon: "📖" };
@@ -89,14 +109,42 @@ function App() {
     return { name: "Maestro Lector", icon: "👑" };
   };
 
+  // Login screen
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 shadow-2xl text-center max-w-md">
+          <div className="text-6xl mb-4">🔒</div>
+          <h2 className="text-2xl font-bold text-white mb-2">Sesión Cerrada</h2>
+          <p className="text-white/70 mb-6">Has cerrado sesión exitosamente</p>
+          <button
+            onClick={() => setIsAuthenticated(true)}
+            className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-bold px-6 py-3 rounded-xl hover:opacity-90 transition-all shadow-lg"
+          >
+            Iniciar Sesión
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   if (activeMission !== null) {
     return (
-      <MissionPage
-        missionId={activeMission}
-        mission={missions[activeMission - 1]}
-        onComplete={handleCompleteMission}
-        onClose={handleCloseMission}
-      />
+      <>
+        <MissionPage
+          missionId={activeMission}
+          mission={missions[activeMission - 1]}
+          onComplete={handleCompleteMission}
+          onClose={handleCloseMission}
+          onOpenSettings={handleOpenSettings}
+        />
+        {showSettings && (
+          <SettingsModal
+            onClose={handleCloseSettings}
+            onLogout={handleLogout}
+          />
+        )}
+      </>
     );
   }
 
@@ -124,7 +172,7 @@ function App() {
       </div>
 
       <div className="relative z-10">
-        <Header level={level} totalXP={totalXP} completedMissions={completedMissions.length} />
+        <Header level={level} totalXP={totalXP} completedMissions={completedMissions.length} onOpenSettings={handleOpenSettings} />
 
         {/* Objective Section */}
         <div className="max-w-6xl mx-auto px-4 py-6">
@@ -244,6 +292,14 @@ function App() {
           </p>
         </footer>
       </div>
+
+      {/* Settings Modal */}
+      {showSettings && (
+        <SettingsModal
+          onClose={handleCloseSettings}
+          onLogout={handleLogout}
+        />
+      )}
     </div>
   );
 }
